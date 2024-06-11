@@ -1,0 +1,8 @@
+<!-- welcome-chat.component.html -->
+<div class="welcome-container">
+    <h1>Welcome to Our Chat App!</h1>
+    <p>Please enter your name to continue:</p>
+    <input type="text" [(ngModel)]="userName" (keyup.enter)="startChat()" placeholder="Enter your name" required>
+    <button (click)="startChat()" >Start Chatting</button>
+  </div>
+  
