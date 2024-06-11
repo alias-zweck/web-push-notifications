@@ -9,7 +9,8 @@
     <div *ngFor="let message of messageService.messages$ | async" class="message" [ngClass]="{'mine': message.sender === currentUser}">
       <span class="username">{{ message.sender === currentUser ? 'You' : message.sender }}</span>
       <div class="message-content">{{ message.text }}</div>
-      <span class="timestamp">{{ message.timestamp | date: 'shortTime' }}</span>
+      <span class="timestamp" *ngIf="isValidDate(message.timestamp)">{{ message.timestamp | date: 'shortTime' }}</span>
+      <span class="timestamp" *ngIf="!isValidDate(message.timestamp)">Invalid Date</span>
     </div>
     <div *ngIf="(messageService.messages$ | async)?.length === 0" class="empty-chat">
       No messages yet. Start the conversation!
