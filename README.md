@@ -27,3 +27,60 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ### Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+
+
+## Firebase Cloud Messaging Backend
+
+This project is a backend service built with Express that allows clients to subscribe and unsubscribe from Firebase Cloud Messaging (FCM) topics, and to send notifications to those topics.
+
+### Features
+
+- **Subscribe to a Topic:** Clients can subscribe to a specific FCM topic.
+- **Unsubscribe from a Topic:** Clients can unsubscribe from a specific FCM topic.
+- **Publish a Notification:** Send notifications to all subscribers of a specific topic.
+
+### Prerequisites
+
+- Node.js (>= 14.x)
+- npm (>= 6.x)
+- Firebase Admin SDK credentials
+
+### Setup
+
+1. **Clone the repository:**
+    ```sh
+    git clone https://github.com/yourusername/fcm-backend.git
+    cd fcm-backend
+    ```
+
+2. **Install dependencies:**
+    ```sh
+    npm install
+    ```
+
+3. **Firebase Admin SDK:**
+    - Obtain your Firebase Admin SDK credentials and save the JSON file in your project directory.
+    - Initialize Firebase Admin SDK in a file named `firebaseAdmin.js`:
+        ```js
+        const admin = require('firebase-admin');
+        const serviceAccount = require('./path-to-your-firebase-adminsdk.json');
+
+        admin.initializeApp({
+          credential: admin.credential.cert(serviceAccount),
+        });
+
+        module.exports = admin;
+        ```
+
+4. **Environment Variables:**
+    - Create a `.env` file in the root directory of your project and set the port:
+        ```
+        PORT=3000
+        ```
+
+### Running the Server
+
+To start the server, run:
+```sh
+npm start
