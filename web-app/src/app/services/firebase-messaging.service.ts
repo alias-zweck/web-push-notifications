@@ -10,7 +10,7 @@ export class FirebaseMessagingService {
     navigator.serviceWorker.addEventListener("message", (event) => {
       const { notification, data } = event.data?.payload || event.data;
       if (notification && data && event.data.type === "background-message") {
-        const { body: text } = notification;
+        const { body: text } = notification ?? data;
         const { sender, timestamp = new Date(), topic } = data;
 
         const newMessage = { text, sender, timestamp: new Date(timestamp) };

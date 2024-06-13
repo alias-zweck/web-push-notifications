@@ -126,8 +126,9 @@ export class MessageService {
       next: (message) => {
         console.log("New message received: ", message);
         const { notification, data } = message as any;
-        if (notification && data) {
-          const { body: text } = notification;
+        if (data) {
+          const { body: text } = notification ?? data;
+
           const { sender, timestamp = new Date(), topic } = data;
 
           if (text && sender && sender !== this.name) {
@@ -137,7 +138,7 @@ export class MessageService {
         }
       },
       error: (error) => {
-        console.error("===listenForMessages====error=======", error);
+        console.error(error);
       },
     });
   }
