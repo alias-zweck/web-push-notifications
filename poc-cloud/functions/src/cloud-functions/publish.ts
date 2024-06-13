@@ -13,13 +13,15 @@ export const publish = functions.https.onRequest((req, res) => {
     admin
       .messaging()
       .send({
-        notification: {
-          title: "New Message Received!",
-          body: text,
-        },
+        // notification: {
+        //   title: "New Message Received!",
+        //   body: text,
+        // },
         data: {
           sender,
           timestamp,
+          body: text,
+          topic: topic,
         },
         topic: topic,
       })

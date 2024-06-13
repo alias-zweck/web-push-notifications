@@ -28,6 +28,7 @@ export class ChatComponent implements OnInit {
   public newMessage!: string;
   public selectedGroup!: Group | null;
   public groupMessages: Message[] = [];
+  public notificationsEnabled: boolean = true; // Default to notifications enabled
 
   public groups$ = this.messageService.groups$;
   public filteredGroups: Group[] = [];
@@ -65,6 +66,11 @@ export class ChatComponent implements OnInit {
     this.groups$.subscribe(groups => {
       this.filteredGroups = groups;
     });
+
+    // Load the initial state of notificationsEnabled from localStorage
+    const savedState = localStorage.getItem('notificationsEnabled');
+    this.notificationsEnabled = savedState ? JSON.parse(savedState) : true;
+    this.notifyServiceWorker();
   }
 
   onSearchChange() {
@@ -147,6 +153,23 @@ export class ChatComponent implements OnInit {
           console.error(`Error unsubscribing from topic: ${this.selectedGroup?.name}`, error);
         }
       });
+    }
+  }
+
+  toggleNotifications() {
+    localStorage.setItem('notificationsEnabled', JSON.stringify(this.notificationsEnabled));
+
+    this.notifyServiceWorker();
+  }
+
+  notifyServiceWorker() {
+    if (navigator.serviceWorker.controller) {
+      navigator.serviceWorker.controller.postMessage({
+        type: 'update-notifications-enabled',
+        payload: this.notificationsEnabled
+      });
+    } else {
+      console.error('Service Worker controller not found.');
     }
   }
 }

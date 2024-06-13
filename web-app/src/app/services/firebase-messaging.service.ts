@@ -17,5 +17,14 @@ export class FirebaseMessagingService {
         this.messageService.addMessage(topic, newMessage);
       }
     });
+
+    // Send initial state of notificationsEnabled to the service worker
+    const notificationsEnabled = JSON.parse(localStorage.getItem('notificationsEnabled') || 'true');
+    if (navigator.serviceWorker.controller) {
+      navigator.serviceWorker.controller.postMessage({
+        type: 'update-notifications-enabled',
+        payload: notificationsEnabled
+      });
+    }
   }
 }

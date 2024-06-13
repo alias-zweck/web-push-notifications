@@ -7,6 +7,10 @@
           <h3 class="profile-name">{{ currentUser }}</h3>
         </div>
         <button class="logout-button" (click)="logout()">Logout</button>
+        <label>
+          <input type="checkbox" [(ngModel)]="notificationsEnabled" (change)="toggleNotifications()">
+          Show Popup Notifications
+        </label>
       </div>
       <input type="text" placeholder="Search" class="search-input" [(ngModel)]="searchTerm" (input)="onSearchChange()">
     </div>
@@ -19,7 +23,7 @@
           <span *ngIf="group.timestamp" class="timestamp">{{ group.timestamp | date: 'shortTime' }}</span>
         </div>
         <span class="status" [ngClass]="{'active-status': group.status === 'Active', 'inactive-status': group.status === 'Inactive'}">{{ group.status }}</span>
-      </div>
+      </div> 
     </div>
   </div>
   <div class="chat-container" *ngIf="selectedGroup">
