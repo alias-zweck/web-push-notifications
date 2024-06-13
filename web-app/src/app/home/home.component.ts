@@ -40,12 +40,12 @@ export class HomeComponent {
 
   subscribe() {
     if (this.token) {
-      this.messageService.subscribeToTopic().subscribe({
-        next: (response) => {
-          console.log('Subscribed to topic:', response);
-        },
-        error: (error) => console.error('Error subscribing to topic:', error),
-      });
+      // this.messageService.subscribeToTopic().subscribe({
+      //   next: (response) => {
+      //     console.log('Subscribed to topic:', response);
+      //   },
+      //   error: (error) => console.error('Error subscribing to topic:', error),
+      // });
     } else {
       console.error('Token is not available. Cannot subscribe without token.');
     }

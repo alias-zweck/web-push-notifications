@@ -10,7 +10,7 @@ import { ChatComponent } from './chat/chat.component';
 import { HomeComponent } from './home/home.component';
 import { FormsModule } from '@angular/forms';
 import { environment } from 'src/environments/environment';
-import { FirebaseMessagingService } from './firebase-messaging.service.service';
+import { FirebaseMessagingService } from './services/firebase-messaging.service';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({

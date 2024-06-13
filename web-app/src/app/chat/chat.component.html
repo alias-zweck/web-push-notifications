@@ -1,23 +1,58 @@
-<!-- chat.component.html -->
-<div class="chat-container">
-  <div class="header">
-    <h2>Chat Room</h2>
-    <h4>{{currentUser}}</h4>
-    <button (click)="unsubscribe()" class="logout-button">Logout</button>
-  </div>
-  <div class="messages" #messagesContainer>
-    <div *ngFor="let message of messageService.messages$ | async" class="message" [ngClass]="{'mine': message.sender === currentUser}">
-      <span class="username">{{ message.sender === currentUser ? 'You' : message.sender }}</span>
-      <div class="message-content">{{ message.text }}</div>
-      <span class="timestamp" *ngIf="isValidDate(message.timestamp)">{{ message.timestamp | date: 'shortTime' }}</span>
-      <span class="timestamp" *ngIf="!isValidDate(message.timestamp)">Invalid Date</span>
+<div class="chat-app">
+  <div class="sidebar">
+    <div class="profile-section">
+      <div class="profile-info-section">
+        <div class="profile-info">
+          <img class="profile-pic" src="/assets/images/profile-pic.png" alt="Profile Picture">
+          <h3 class="profile-name">{{ currentUser }}</h3>
+        </div>
+        <button class="logout-button" (click)="logout()">Logout</button>
+      </div>
+      <input type="text" placeholder="Search" class="search-input" [(ngModel)]="searchTerm" (input)="onSearchChange()">
     </div>
-    <div *ngIf="(messageService.messages$ | async)?.length === 0" class="empty-chat">
-      No messages yet. Start the conversation!
+    <div class="contact-list">
+      <div *ngFor="let group of filteredGroups" class="contact" (click)="selectGroup(group)">
+        <img class="contact-pic" [src]="group.pic" alt="Contact Picture">
+        <div class="contact-info">
+          <h4>{{ group.name }}</h4>
+          <p>{{ group.lastMessage }}</p>
+          <span *ngIf="group.timestamp" class="timestamp">{{ group.timestamp | date: 'shortTime' }}</span>
+        </div>
+        <span class="status" [ngClass]="{'active-status': group.status === 'Active', 'inactive-status': group.status === 'Inactive'}">{{ group.status }}</span>
+      </div>
     </div>
   </div>
-  <div class="message-input">
-    <input type="text" [(ngModel)]="newMessage" (keyup.enter)="sendMessage()" placeholder="Type something...">
-    <button (click)="sendMessage()">Send</button>
+  <div class="chat-container" *ngIf="selectedGroup">
+    <div class="chat-header">
+      <div class="chat-info">
+        <img class="chat-pic" [src]="selectedGroup.pic" alt="Chat Picture">
+        <div class="chat-group-info">
+          <h2>{{ selectedGroup.name }}</h2>
+          <span class="online-status" [ngClass]="{'active-status': selectedGroup.status === 'Active', 'inactive-status': selectedGroup.status === 'Inactive'}">{{ selectedGroup.status }}</span>
+        </div>
+      </div>
+      <ng-container *ngIf="selectedGroup.status === 'Active'; else inactiveBtn">
+        <button class="inactive-button" (click)="inactive()">Exist</button>
+      </ng-container>
+      <ng-template #inactiveBtn>
+        <button class="active-button" (click)="active()">Join</button>
+      </ng-template>
+    </div>
+    <div class="messages" #messagesContainer>
+      <div *ngFor="let message of groupMessages" class="message" [ngClass]="{'mine': message.sender === currentUser}">
+        <span class="username">{{ message.sender === currentUser ? 'You' : message.sender }}</span>
+        <div class="message-content">{{ message.text }}</div>
+        <span class="timestamp">{{ message.timestamp | date: 'shortTime' }}</span>
+      </div>
+    </div>
+    <div class="message-input">
+      <input type="text" [(ngModel)]="newMessage" (keyup.enter)="sendMessage()" placeholder="Type something to send..." [disabled]="selectedGroup.status === 'Inactive'">
+      <button (click)="sendMessage()" [disabled]="selectedGroup.status === 'Inactive'"><i class="send-icon"></i></button>
+    </div>
+  </div>
+  <div class="chat-container" *ngIf="!selectedGroup">
+    <div class="chat-unselect">
+      <h2>Please select a group to start chatting</h2>
+    </div>
   </div>
 </div>

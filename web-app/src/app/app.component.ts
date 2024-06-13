@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MessageService } from './services/message.service';
+import { FirebaseMessagingService } from './services/firebase-messaging.service';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,7 @@ export class AppComponent {
 
   token: string | null = null;
 
-  constructor(private messageService: MessageService) {
+  constructor(private messageService: MessageService, private firebaseMessagingService: FirebaseMessagingService) {
     this.requestPermission();
   }
 
