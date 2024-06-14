@@ -1,6 +1,8 @@
-// welcome-chat.component.scss
+/* welcome-chat.component.scss */
 $button-color: #4CAF50;
 $button-hover-color: darken($button-color, 10%);
+$button-disabled-color: lighten($button-color, 30%);
+$button-disabled-border-color: lighten($button-color, 40%);
 
 .welcome-container {
   display: flex;
@@ -40,4 +42,16 @@ button {
   &:hover {
     background-color: $button-hover-color;
   }
+
+  &:disabled {
+    background-color: $button-disabled-color;
+    cursor: not-allowed;
+    border: 1px solid $button-disabled-border-color;
+  }
+}
+
+.warning-message {
+  margin-top: 20px;
+  color: red;
+  font-weight: bold;
 }

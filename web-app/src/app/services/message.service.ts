@@ -94,15 +94,15 @@ export class MessageService {
         console.log("Permission: ", permission);
         if (permission === "granted") {
           console.log("Notification permission granted");
-          this.getToken();
+          setTimeout(() => {
+            this.getToken();
+          }, 1000);
         } else {
           console.log(permission);
           alert("Unable to get permission to notify");
         }
       },
-      error: (error) => {
-        console.log(error);
-      },
+      error: (error) => {},
     });
 
     this.afMessaging.requestToken.subscribe({
@@ -114,9 +114,7 @@ export class MessageService {
           console.log("Token updated");
         }
       },
-      error: (error) => {
-        console.log(error);
-      },
+      error: (error) => {},
     });
   }
 
@@ -211,14 +209,16 @@ export class MessageService {
   }
 
   private getToken(): void {
-    this.afMessaging.getToken.subscribe((token) => {
-      this.token = token;
-      if (!token) {
-        console.log("Token Removed");
-      } else {
-        console.log("Get token");
-      }
-    });
+    try {
+      this.afMessaging.getToken.subscribe((token) => {
+        this.token = token;
+        if (!token) {
+          console.log("Token Removed");
+        } else {
+          console.log("Get token");
+        }
+      });
+    } catch (error) {}
   }
 
   get token(): string | null {

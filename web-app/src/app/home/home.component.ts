@@ -10,6 +10,7 @@ import { MessageService } from '../services/message.service';
 export class HomeComponent {
   private token: string | null = null;
   userName: string = '';
+  isLoading: boolean = true;
 
   constructor(private router: Router, private messageService: MessageService) {
   }
@@ -18,6 +19,9 @@ export class HomeComponent {
     this.token = this.messageService.token;
     this.messageService.token$.subscribe((token) => {
       this.token = token;
+      if(this.token){
+        this.isLoading =false;
+      }
     });
   }
 
@@ -31,23 +35,9 @@ export class HomeComponent {
     if (name) {
       console.log('Starting chat for:', name);
       this.messageService.name = name;
-      this.subscribe();
       this.router.navigate(['/chat']);
     } else {
       alert('Please enter your name.');
-    }
-  }
-
-  subscribe() {
-    if (this.token) {
-      // this.messageService.subscribeToTopic().subscribe({
-      //   next: (response) => {
-      //     console.log('Subscribed to topic:', response);
-      //   },
-      //   error: (error) => console.error('Error subscribing to topic:', error),
-      // });
-    } else {
-      console.error('Token is not available. Cannot subscribe without token.');
     }
   }
 }

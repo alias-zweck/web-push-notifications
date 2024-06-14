@@ -12,12 +12,14 @@ import { FormsModule } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { FirebaseMessagingService } from './services/firebase-messaging.service';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { LoaderComponent } from './loader/loader.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ChatComponent,
-    HomeComponent
+    HomeComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,

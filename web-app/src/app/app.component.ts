@@ -8,15 +8,12 @@ import { FirebaseMessagingService } from './services/firebase-messaging.service'
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'client';
-
   token: string | null = null;
 
-  constructor(private messageService: MessageService, private firebaseMessagingService: FirebaseMessagingService) {
-    this.requestPermission();
-  }
+  constructor(private messageService: MessageService, private firebaseMessagingService: FirebaseMessagingService) {}
 
   ngOnInit() {
+    this.requestPermission();
     this.token = this.messageService.token;
     this.messageService.token$.subscribe((token) => {
       this.token = token;

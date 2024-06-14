@@ -7,12 +7,12 @@
           <h3 class="profile-name">{{ currentUser }}</h3>
         </div>
         <button class="logout-button" (click)="logout()">Logout</button>
-        <label>
-          <input type="checkbox" [(ngModel)]="notificationsEnabled" (change)="toggleNotifications()">
-          Show Popup Notifications
-        </label>
       </div>
       <input type="text" placeholder="Search" class="search-input" [(ngModel)]="searchTerm" (input)="onSearchChange()">
+      <label class="notifications-checkbox">
+        <input type="checkbox" [(ngModel)]="notificationsEnabled" (change)="toggleNotifications()">
+        Show Notifications
+      </label>
     </div>
     <div class="contact-list">
       <div *ngFor="let group of filteredGroups" class="contact" (click)="selectGroup(group)">
@@ -36,7 +36,7 @@
         </div>
       </div>
       <ng-container *ngIf="selectedGroup.status === 'Active'; else inactiveBtn">
-        <button class="inactive-button" (click)="inactive()">Exist</button>
+        <button class="inactive-button" (click)="inactive()">Exit</button>
       </ng-container>
       <ng-template #inactiveBtn>
         <button class="active-button" (click)="active()">Join</button>
