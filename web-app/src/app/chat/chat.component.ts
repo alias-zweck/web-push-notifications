@@ -175,7 +175,7 @@ export class ChatComponent implements OnInit {
         payload: this.notificationsEnabled
       });
     } else {
-     window.location.reload()
+      console.error('Service Worker controller not found.');
     }
   }
 }

@@ -94,15 +94,15 @@ export class MessageService {
         console.log("Permission: ", permission);
         if (permission === "granted") {
           console.log("Notification permission granted");
-          setTimeout(() => {
-            this.getToken();
-          }, 1000);
+          this.getToken();
         } else {
           console.log(permission);
           alert("Unable to get permission to notify");
         }
       },
-      error: (error) => {},
+      error: (error) => {
+        console.error(error);
+      },
     });
 
     this.afMessaging.requestToken.subscribe({
@@ -114,7 +114,9 @@ export class MessageService {
           console.log("Token updated");
         }
       },
-      error: (error) => {},
+      error: (error) => {
+        console.error(error);
+      },
     });
   }
 
@@ -218,7 +220,9 @@ export class MessageService {
           console.log("Get token");
         }
       });
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   get token(): string | null {
