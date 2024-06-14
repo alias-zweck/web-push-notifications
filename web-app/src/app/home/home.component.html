@@ -5,7 +5,7 @@
     <input type="text" [(ngModel)]="userName" (keyup.enter)="startChat()" placeholder="Enter your name" required>
     <button [disabled]="isLoading" (click)="startChat()" class="start-chat-btn">Start Chatting</button>
     <div *ngIf="isLoading" class="warning-message">
-      Waiting for token, please wait...
+      Allow notification to continue...
     </div>
   </div>
   

@@ -1,7 +1,15 @@
 importScripts('https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js');
 importScripts('https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging-compat.js');
 
-firebase.initializeApp();
+firebase.initializeApp({
+  apiKey: "AIzaSyA2eOxnSaJ_Il6Bd-FS4xD8AhEDcCAlmG8",
+  authDomain: "push-notification-b5146.firebaseapp.com",
+  databaseURL: "https://push-notification-b5146-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "push-notification-b5146",
+  storageBucket: "push-notification-b5146.appspot.com",
+  messagingSenderId: "855715831492",
+  appId: "1:855715831492:web:813da0c9c7157383a03391"
+});
 
 const messaging = firebase.messaging();
 
@@ -92,4 +100,25 @@ messaging.onBackgroundMessage(async function(payload) {
   } else {
     console.log('Notifications are disabled.');
   }
+});
+
+
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+
+  const redirectUrl = 'https://push-notification-b5146.firebaseapp.com/chat'; // Update this URL as needed
+
+  event.waitUntil(
+    clients.matchAll({ type: 'window', includeUncontrolled: true }).then(windowClients => {
+      for (let i = 0; i < windowClients.length; i++) {
+        const client = windowClients[i];
+        if (client.url === redirectUrl && 'focus' in client) {
+          return client.focus();
+        }
+      }
+      if (clients.openWindow) {
+        return clients.openWindow(redirectUrl);
+      }
+    })
+  );
 });

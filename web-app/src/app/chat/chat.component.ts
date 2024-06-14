@@ -67,6 +67,12 @@ export class ChatComponent implements OnInit {
       this.filteredGroups = groups;
     });
 
+    this.messageService.messages$.subscribe((messages) => {
+      if(this.selectedGroup){
+        this.selectGroup(this.selectedGroup);
+      }
+    });
+
     // Load the initial state of notificationsEnabled from localStorage
     const savedState = localStorage.getItem('notificationsEnabled');
     this.notificationsEnabled = savedState ? JSON.parse(savedState) : true;
@@ -169,7 +175,7 @@ export class ChatComponent implements OnInit {
         payload: this.notificationsEnabled
       });
     } else {
-      console.error('Service Worker controller not found.');
+     window.location.reload()
     }
   }
 }

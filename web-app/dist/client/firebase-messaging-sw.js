@@ -101,3 +101,24 @@ messaging.onBackgroundMessage(async function(payload) {
     console.log('Notifications are disabled.');
   }
 });
+
+
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+
+  const redirectUrl = 'https://push-notification-b5146.firebaseapp.com/chat'; // Update this URL as needed
+
+  event.waitUntil(
+    clients.matchAll({ type: 'window', includeUncontrolled: true }).then(windowClients => {
+      for (let i = 0; i < windowClients.length; i++) {
+        const client = windowClients[i];
+        if (client.url === redirectUrl && 'focus' in client) {
+          return client.focus();
+        }
+      }
+      if (clients.openWindow) {
+        return clients.openWindow(redirectUrl);
+      }
+    })
+  );
+});

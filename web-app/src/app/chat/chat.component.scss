@@ -107,6 +107,10 @@
             color: #e74c3c; // Red for inactive
           }
         }
+        &.selected-group {
+          background-color: #34495e; // Change to your desired highlight color
+          border-left: 5px solid #2980b9; // Optional: Add a border to indicate selection
+        }
       }
     }
   }

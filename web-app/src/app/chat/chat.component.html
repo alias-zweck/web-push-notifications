@@ -15,7 +15,7 @@
       </label>
     </div>
     <div class="contact-list">
-      <div *ngFor="let group of filteredGroups" class="contact" (click)="selectGroup(group)">
+      <div *ngFor="let group of filteredGroups" class="contact" (click)="selectGroup(group)"   [ngClass]="{'selected-group': selectedGroup?.name === group.name}" >
         <img class="contact-pic" [src]="group.pic" alt="Contact Picture">
         <div class="contact-info">
           <h4>{{ group.name }}</h4>
