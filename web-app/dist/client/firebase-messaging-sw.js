@@ -45,6 +45,7 @@ function saveSetting(key, value) {
     });
   });
 }
+console.log(1);
 
 function getSetting(key) {
   return openDatabase().then(db => {
@@ -72,16 +73,16 @@ self.addEventListener('message', event => {
 });
 
 messaging.onBackgroundMessage(async function(payload) {
-  console.log('Received background message ', payload);
+  console.log('Received background message: ', payload);
   
   const notificationsEnabled = await getSetting('notificationsEnabled');
-  console.log('Current notificationsEnabled state:', notificationsEnabled);
+  console.log('Current notificationsEnabled state', notificationsEnabled);
   
   // Customize notification here
   const notificationTitle ='New Notification';
   const notificationOptions = {
     body: payload.data.body,
-    icon: '/firebase-logo.png'
+    icon: '/chat-icon.png'
   };
 
   // Send a message to the client

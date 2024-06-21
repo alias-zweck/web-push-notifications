@@ -30,6 +30,8 @@ function openDatabase() {
   });
 }
 
+console.log("New sw loaded.....");
+
 function saveSetting(key, value) {
   return openDatabase().then(db => {
     return new Promise((resolve, reject) => {
@@ -72,16 +74,16 @@ self.addEventListener('message', event => {
 });
 
 messaging.onBackgroundMessage(async function(payload) {
-  console.log('Received background message ', payload);
+  console.log('Received background message: ', payload);
   
   const notificationsEnabled = await getSetting('notificationsEnabled');
-  console.log('Current notificationsEnabled state:', notificationsEnabled);
+  console.log('Current notificationsEnabled state', notificationsEnabled);
   
   // Customize notification here
   const notificationTitle ='New Notification';
   const notificationOptions = {
     body: payload.data.body,
-    icon: 'chat-icon.png'
+    icon: '/chat-icon.png'
   };
 
   // Send a message to the client
