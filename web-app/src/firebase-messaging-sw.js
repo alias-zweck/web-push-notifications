@@ -81,7 +81,7 @@ messaging.onBackgroundMessage(async function(payload) {
   const notificationTitle ='New Notification';
   const notificationOptions = {
     body: payload.data.body,
-    icon: '/firebase-logo.png'
+    icon: 'chat-icon.png'
   };
 
   // Send a message to the client
